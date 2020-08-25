@@ -63,16 +63,23 @@ for num_key in files:
             print(str(num_url+1) + ". " + "url:"+url)
             try:
                 print("讀取開始")
+
+                #緩衝
+                sleep(5)
+
                 #向url發出要求
                 request = req.Request(url, headers = {"User-Agent" : ua.chrome})
                 print("正在發出請求...")
 
                 #緩衝
-                sleep(15)
+                sleep(5)
 
                 with req.urlopen(request) as response:
                     print("等待中...")
                     data = response.read().decode("utf-8",errors='ignore')
+
+                #緩衝
+                sleep(5)
 
                 print("正在轉換成bs4")
 

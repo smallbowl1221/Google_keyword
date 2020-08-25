@@ -39,9 +39,6 @@ def geturl(page):
 
     request = req.Request(search_url_page, headers = {"User-Agent" : ua.chrome})
 
-    #緩衝
-    sleep(15)
-
     with req.urlopen(request) as response:
         data = response.read().decode("utf-8")
 
@@ -53,12 +50,8 @@ def geturl(page):
     print("search_set 數量" + str(len(search_set)))
     print()
 
+    #判斷是否未擷取到資料
     if(len(search_set) == 0):
-        # 將原始碼存入txt中------------------------------------------------------------------------------------------------------------------------------------
-        with open(main_address + "\\note\\" +"未抓到之url.txt","a+",encoding="utf-8") as fuck:
-            fuck.write(search_url_page)
-            fuck.close()
-        #緩衝3秒
         print("未擷取任何URL，",end = "")
         print("重新載入中",end = "")
         for i in range(7):
@@ -172,6 +165,8 @@ for files_num in files:
                 writer.writerow(["Title","url"])
                 for i in url_list:
                     writer.writerow([ i[0],i[1] ])
+
+            sleep(15)
 
         else:
             print(dataname + "_url.csv is exist")
