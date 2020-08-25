@@ -31,6 +31,10 @@ google_url = "https://www.google.com.tw/"
 
 def geturl(page):
     
+    #緩衝15秒
+    print("緩衝中...")
+    sleep(15)
+
     #目前搜尋頁面
     search_url_page = search_url + "&start=" + str(page) + "0"
     print("-"*200)
@@ -165,8 +169,6 @@ for files_num in files:
                 writer.writerow(["Title","url"])
                 for i in url_list:
                     writer.writerow([ i[0],i[1] ])
-
-            sleep(15)
 
         else:
             print(dataname + "_url.csv is exist")
