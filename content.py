@@ -19,13 +19,13 @@ import ssl
 ssl._create_default_https_context = ssl._create_unverified_context
 
 #擷取 content.py 執行位置
-main_address = os.path.dirname(os.path.abspath(__file__))
+Data_address = os.path.abspath("..") + "\\Data\\Google\\G_Data\\"
 
 #載入隨機user agent
 ua = UserAgent()
 
 #擷取Data下所有資料夾
-files = listdir(main_address + "\\Data\\")
+files = listdir(Data_address)
 
 #num_key ==> 第幾個 keyword
 #逐key run------------------------------------------------------------------------------------------------------------------------------------
@@ -34,7 +34,7 @@ for num_key in files:
     #輸出現在 key word
     print("key word: " + num_key + "="*150)
 
-    if not os.path.isfile(main_address + "\\Data\\" + num_key + "\\"  + num_key + "_sentence.csv"):
+    if not os.path.isfile( Data_address + num_key + "\\"  + num_key + "_sentence.csv"):
 
         #二維向量 [	["URL","Title","sentence"]	, ...]
         sentence_reg = []
@@ -43,7 +43,7 @@ for num_key in files:
         keyset = re.split( "\+" , num_key )
 
         #開啟指定 key_url.csv------------------------------------------------------------------------------------------------------------------------------------
-        with open( main_address + "\\Data\\" + num_key + "\\" + num_key + "_url.csv", newline="" , encoding="utf-8-sig" ) as csvFile:
+        with open( Data_address + num_key + "\\" + num_key + "_url.csv", newline="" , encoding="utf-8-sig" ) as csvFile:
             #用pandas讀取csv檔案
             dic = csv.DictReader(csvFile)#將.csv轉成dictionary
             Title_vector = []
@@ -122,7 +122,7 @@ for num_key in files:
                 print("TypeError")
 
         # 將文章存入 dataname.csv 中------------------------------------------------------------------------------------------------------------------------------------
-        with open( main_address + "\\Data\\" + num_key + "\\"  + num_key + "_sentence.csv","w",newline='',encoding="utf-8-sig") as csvfile:
+        with open( Data_address + num_key + "\\"  + num_key + "_sentence.csv","w",newline='',encoding="utf-8-sig") as csvfile:
             #建立寫入器
             writer = csv.writer(csvfile)
             #寫入標題

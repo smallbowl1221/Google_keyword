@@ -13,6 +13,8 @@ import urllib.request as req
 
 #載入 Urlget.py 檔案的位置並加上目錄 Data
 main_address = os.path.dirname(os.path.abspath(__file__))
+#載入資料位置
+Data_address = os.path.abspath("..") + "\\Data\\Google\\G_Data"
 
 #files ==> 將 \ALL\ 資料夾中的文件存取
 files = listdir(main_address + "\\IO\\" + "ALL\\")
@@ -125,7 +127,7 @@ for files_num in files:
         dataname = dataname.rstrip("+")
 
         #創建目錄
-        address_dic = main_address + "\\Data\\" + dataname + "\\"
+        address_dic = Data_address + "\\" + dataname + "\\"
         
 
         if not os.path.isfile(address_dic + dataname + "_url.csv"):
@@ -154,7 +156,7 @@ for files_num in files:
 
 
             #創建目錄
-            address_dic = main_address + "\\Data\\" + dataname + "\\"
+            address_dic = Data_address + "\\" + dataname + "\\"
 
             #檢查目錄是否存在
             if not os.path.isdir(address_dic):
@@ -174,14 +176,5 @@ for files_num in files:
         else:
             print(dataname + "_url.csv is exist")
 
-    # 將dataname存入\IO\Dirname.csv中------------------------------------------------------------------------------------------------------------------------------------
-    with open( main_address + "\\IO\\" + "Dirname.csv","a+", newline='',encoding="utf-8-sig") as csvfile:
-        #建立寫入器
-        writer = csv.writer(csvfile)
-        #寫入標題
-        writer.writerow(["Dataname","Path"])
-        #寫入資料
-        for i in range(len(dataname_list)):
-            writer.writerow([dataname_list[i],path_list[i]])
 
 print("Urlget.py program finish")
