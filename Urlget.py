@@ -146,9 +146,17 @@ for files_num in files:
 
             #逐頁抓取(共 3 頁)
             for page in range(0,3,1):
+                #key of 空值
                 success = True
+                #times => 執行次數
+                times = 0
                 while(success):
-                    success,url_list_reg = geturl(page)
+                    times += 1
+                    #最多執行10次
+                    if(times < 10):
+                        success,url_list_reg = geturl(page)
+                    else:
+                        success = False
                 url_list += url_list_reg
 
 

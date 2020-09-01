@@ -1,4 +1,5 @@
 import requests
+import http
 import string
 import bs4
 import re
@@ -127,6 +128,9 @@ for num_key in files:
             
             except TypeError as e :
                 print("TypeError")
+
+            except http.client.RemoteDisconnected:
+                print("RemoteDisconnected")
 
         # 將文章存入 dataname.csv 中------------------------------------------------------------------------------------------------------------------------------------
         with open( Data_address + num_key + "\\"  + num_key + "_sentence.csv","w",newline='',encoding="utf-8-sig") as csvfile:
