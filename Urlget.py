@@ -157,7 +157,8 @@ for files_num in files:
                         success,url_list_reg = geturl(page)
                     else:
                         success = False
-                url_list += url_list_reg
+                if(url_list_reg != None):
+                    url_list += url_list_reg
 
 
             #創建目錄
