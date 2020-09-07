@@ -124,16 +124,19 @@ for num_key in files:
                 elif hasattr(e,"reason"):
                     print("URl Error => " + str(e.reason))
 
-            except socket.timeout:
+            except ConnectionResetError as e:
+                print("ConnectionResetError")
+
+            except socket.timeout as e:
                 print("read timeout")
 
-            except TimeoutError:
+            except TimeoutError as e:
                 print("TimeoutError")
             
-            except TypeError:
+            except TypeError as e:
                 print("TypeError")
 
-            except http.client.RemoteDisconnected:
+            except http.client.RemoteDisconnected as e:
                 print("RemoteDisconnected")
 
         # 將文章存入 dataname.csv 中------------------------------------------------------------------------------------------------------------------------------------
