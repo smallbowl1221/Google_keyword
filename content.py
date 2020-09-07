@@ -15,6 +15,7 @@ from bs4 import BeautifulSoup
 import urllib.request as req
 import urllib.error
 import ssl
+import socket
 
 #導入ssl module 改成不驗證
 ssl._create_default_https_context = ssl._create_unverified_context
@@ -75,7 +76,7 @@ for num_key in files:
                 #緩衝
                 sleep(5)
 
-                with req.urlopen(request) as response:
+                with req.urlopen(request,timeout=60) as response:
                     print("等待中...")
                     data = response.read().decode("utf-8",errors='ignore')
 
@@ -123,10 +124,13 @@ for num_key in files:
                 elif hasattr(e,"reason"):
                     print("URl Error => " + str(e.reason))
 
-            except TimeoutError as e :
+            except socket.timeout:
+                print("read timeout")
+
+            except TimeoutError:
                 print("TimeoutError")
             
-            except TypeError as e :
+            except TypeError:
                 print("TypeError")
 
             except http.client.RemoteDisconnected:
