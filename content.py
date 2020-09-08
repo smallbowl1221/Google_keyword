@@ -136,6 +136,9 @@ for num_key in files:
             except TypeError as e:
                 print("TypeError")
 
+            except http.client.IncompleteRead as e:
+                print("http_client.IncompleteRead")
+
             except http.client.RemoteDisconnected as e:
                 print("RemoteDisconnected")
 
