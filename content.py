@@ -85,6 +85,8 @@ for num_key in files:
 
                 print("正在轉換成bs4")
 
+                #data = "<!-[if IE eq 9]>" + data + "<![end if]->"
+
                 #取得文章bs4物件
                 root = bs4.BeautifulSoup(data, "html.parser")
 
