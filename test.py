@@ -28,6 +28,7 @@ for files_num in files:
                     break
             if(not key):
                 num+=1
+                print()
 
                     
 print(num)
