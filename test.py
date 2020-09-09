@@ -28,12 +28,11 @@ for files_num in files:
                     break
             if(not key):
                 num+=1
-                print()
 
                     
 print(num)
 # endregion
 
 #已抓取url資料數量
-#print(len(files))
+print( "以抓取數量: " + str(len(files_get)))
 
