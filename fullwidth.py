@@ -16,16 +16,38 @@ import urllib.request as req
 import urllib.error
 import ssl
 import socket
-import http.client
 
-#設定MAXHEADERS
-http.client._MAXHEADERS = 1000
+#把字串全形轉半形
+def strQ2B(ustring):
+    ss = []
+    for s in ustring:
+        rstring = ""
+        for uchar in s:
+            inside_code = ord(uchar)
+            if inside_code == 12288:  # 全形空格直接轉換
+                inside_code = 32
+            elif (inside_code >= 65281 and inside_code <= 65374):  # 全形字元（除空格）根據關係轉化
+                inside_code -= 65248
+            rstring += chr(inside_code)
+        ss.append(rstring)
+    return ''.join(ss)
+
+def filterfull(ustring) :
+
+    for s in ustring:
+        for uchar in s:
+            inside_code = ord(uchar)
+            if (inside_code == 12288 or (inside_code >= 65281 and inside_code <= 65374) ):
+                return True
+    
+    return False
+
 
 #導入ssl module 改成不驗證
 ssl._create_default_https_context = ssl._create_unverified_context
 
 #擷取 content.py 執行位置
-Data_address = os.path.abspath("..") + "\\Data\\Google\\G_Data\\"
+Data_address = "D:\\python\\資料備份\\Google\\data_half\\"
 
 #載入隨機user agent
 ua = UserAgent()
@@ -36,12 +58,11 @@ files = listdir(Data_address)
 #num_key ==> 第幾個 keyword
 #逐key run------------------------------------------------------------------------------------------------------------------------------------
 for num_key in files:
-    
+
     #輸出現在 key word
-    print("key word: " + num_key + "="*150)
+    print("key word: " + num_key + "="*50)
 
-    if not os.path.isfile( Data_address + num_key + "\\"  + num_key + "_sentence.csv"):
-
+    if(filterfull(num_key)):
         #二維向量 [	["URL","Title","sentence"]	, ...]
         sentence_reg = []
         
@@ -110,7 +131,8 @@ for num_key in files:
                 
                 #針對所有sentence進行掃描，是否存在keyword
                 for sentence in article_content:
-                    for key in keyset:
+                    for keyr in keyset:
+                        key = strQ2B(keyr)
                         if key in sentence:
                             reg = []
                             #去除\n
@@ -157,9 +179,9 @@ for num_key in files:
             #寫入資料
             for i in sentence_reg:
                 writer.writerow([i[0],i[1],i[2]])
-
+    
     else:
-        print(num_key + "_sentence.csv is exist")
+        print(num_key + "is not fullwidth")
         print()
 
-print("contemt.py program finish")
+print("fullwidth.py program finish")

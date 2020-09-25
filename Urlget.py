@@ -11,6 +11,31 @@ from fake_useragent import UserAgent
 from bs4 import BeautifulSoup
 import urllib.request as req
 
+#把字串全形轉半形
+def strQ2B(ustring):
+    ss = []
+    for s in ustring:
+        rstring = ""
+        for uchar in s:
+            inside_code = ord(uchar)
+            if inside_code == 12288:  # 全形空格直接轉換
+                inside_code = 32
+            elif (inside_code >= 65281 and inside_code <= 65374):  # 全形字元（除空格）根據關係轉化
+                inside_code -= 65248
+            rstring += chr(inside_code)
+        ss.append(rstring)
+    return ''.join(ss)
+#判斷是否為fullwidth
+def filterfull(ustring) :
+
+    for s in ustring:
+        for uchar in s:
+            inside_code = ord(uchar)
+            if (inside_code == 12288 or (inside_code >= 65281 and inside_code <= 65374) ):
+                return True
+    
+    return False
+
 #載入 Urlget.py 檔案的位置並加上目錄 Data
 main_address = os.path.dirname(os.path.abspath(__file__))
 #載入資料位置
@@ -27,7 +52,6 @@ ua = UserAgent(verify_ssl=False)
 google_url = "https://www.google.com.tw/"
 
 #https://www.google.com/search?q=key1+key2&start=0
-
 
 def geturl(page):
     
@@ -78,10 +102,11 @@ def geturl(page):
 
 for files_num in files:
 
-    print(files_num + ":" + "="*200)
+    print(files_num + ":" + "="*50)
 
     #dataname_list 暫存 dataname
     dataname_list = []
+
 
     #存放所有key (二維)
     key_frame = []
@@ -96,6 +121,9 @@ for files_num in files:
             line = line.strip()
             #以空格" "來分離key ==> key_list_reg為一陣列
             key_list_reg = line.split(" ")
+            #將 fullwidth ==> halfwidth
+            if(filterfull(key_list_reg)):
+                key_list_reg = strQ2B(key_list_reg)
             #將結果存入key_frame
             key_frame.append(key_list_reg)
             #key_frame = [["台積電","薪水","年終"]]
@@ -104,7 +132,7 @@ for files_num in files:
     for key_list in key_frame:
 
         #顯示現在搜尋之詞彙
-        print("="*200)
+        print("="*50)
         print("現在抓取之關鍵字: " + key_list[0])
         
         #初始dataname
