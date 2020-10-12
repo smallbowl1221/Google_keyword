@@ -42,7 +42,7 @@ main_address = os.path.dirname(os.path.abspath(__file__))
 Data_address = os.path.abspath("..") + "\\Data\\Google\\G_Data"
 
 #files ==> 將 \ALL\ 資料夾中的文件存取
-files = listdir(main_address + "\\IO\\" + "ALL\\")
+files = listdir(main_address + "\\IO\\")
 print(files)
 
 #載入隨機user agent
@@ -115,7 +115,7 @@ for files_num in files:
     path_list = []
 
     # 讀取 input.txt 
-    with open(  main_address + "\\IO\\" + "ALL\\" + files_num , "r" , newline="" , encoding="utf-8-sig") as txtFile:
+    with open(  main_address + "\\IO\\" + files_num , "r" , newline="" , encoding="utf-8-sig") as txtFile:
         for line in txtFile:
             #去除/r/n
             line = line.strip()
